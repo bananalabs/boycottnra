@@ -14,7 +14,8 @@ export const blockDomain = function(blackOrWhite, id, domain, add) {
        // Add domain to blackList
         let list = blackOrWhite['blacklist'] || [];
         list.push(domain);
-        blackOrWhite['whitelist'] = [...list];
+        blackOrWhite['blacklist'] = [...list];
+        localStorage.setItem(id, JSON.stringify(blackOrWhite));
     }
     // Prevent access to domain
     document.write('<h2>This website supports the NRA and has been blocked. #boycottNRA.</h2>');

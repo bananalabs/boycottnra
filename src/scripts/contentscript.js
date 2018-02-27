@@ -20,7 +20,7 @@ const checkDomain = function() {
   // Get domain page to be loaded
   const hostname = window.location.hostname.split('.');
   const domain = hostname[1]+'.'+hostname[2];
-
+  
   // Get browser fingerprint
   const id = guid();
 
@@ -28,20 +28,20 @@ const checkDomain = function() {
   // Stored in local storage 
   // TBD : also store in firebase
   const blackOrWhite = getBlackWhiteList(id);
-
+  
   if(isBlackListed(blackOrWhite, domain)) {
     // Domain is blocked by this browser
     if (isWithdrawnNRA(nraList, domain)) {
       // Domain has withdrawn access from NRA, allow access
-      allowDomain(blackOrWhite, id, domain);
+      allowDomain(blackOrWhite || {}, id, domain);
     } else {
       // Still supporting NRA, Prevent access
-      blockDomain(blackOrWhite, id, domain, false);
+      blockDomain(blackOrWhite || {}, id, domain, false);
     }
   } else if (isSupportsNRA(nraList, domain) && !isWhiteListed(blackOrWhite, domain)) {
     // Domain is supported by NRA and user has not whitelisted it
     // Check if user wants to block
-    informUser(blackOrWhite, id, domain);
+    informUser(blackOrWhite || {}, id, domain);
   }
 }
 
