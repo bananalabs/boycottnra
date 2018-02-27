@@ -4,24 +4,16 @@
   "manifest_version": 2,
   "description": "__MSG_appDescription__",
   "icons": {
-    "16": "icons/icon-16.png",
-    "128": "icons/icon-128.png"
+    "16": "icons/block-nra-logo.svg",
+    "128": "icons/block-nra-logo.svg"
   },
   "default_locale": "en",
-  "background": {
-    "scripts": [
-      "scripts/background.js"
-    ]
-  },
-  "permissions": [
+   "permissions": [
     "tabs",
     "storage",
     "http://*/*",
     "https://*/*"
   ],
-  "options_ui": {
-    "page": "options.html"
-  },
   "content_scripts": [
     {
       "matches": [
@@ -37,11 +29,10 @@
   ],
   "browser_action": {
     "default_icon": {
-      "19": "icons/icon-19.png",
-      "38": "icons/icon-38.png"
+      "19": "icons/block-nra-logo.svg",
+      "38": "icons/block-nra-logo.svg"
     },
-    "default_title": "Extension Boilerplate",
-    "default_popup": "popup.html"
+    "default_title": "#boycottNRA"
   }
 }
 
