@@ -1,7 +1,7 @@
 .dialog {
     margin: 0 auto;
     position: relative;
-    width: 32%;
+    width: 420px;
 }
 
 .dialog-actions {
@@ -19,10 +19,10 @@
     font-size: 22px;
     border: 0;
     border-radius: 3px;
-    box-shadow: 0 5px 5px -5px #333;
+    box-shadow: 0 5px 5px -5px lightgrey;
     transition: background 0.3s ease-in;
 }
 
 .dialog-button__lg {
-    width: 130px;
+    width: 150px;
 }
