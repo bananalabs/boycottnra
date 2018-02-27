@@ -23,6 +23,7 @@
       "js": [
         "scripts/contentscript.js"
       ],
+      "css" : ["styles/styles.css"],
       "run_at": "document_start",
       "all_frames": false
     }

@@ -24,14 +24,14 @@ export const blockDomain = function(blackOrWhite, id, domain, add) {
 
 const boycottDialog = function() {
     // TBD : Add stats on gun violence
-    return '<dialog id="boycottDialog">\
+    return '<dialog id="boycottDialog" class="dialog">\
         <form method="dialog">\
             <p>This website supports the NRA. #boycottNRA.</p>\
-            <menu>\
-                <button id="block" type="submit">Block</button>\
-                <button id="proceed" type="reset">Ask Me Later</button>\
-                <button id="allow" type="reset">Allow</button>\
-            </menu>\
+            <div class="dialog-actions">\
+                <button id="block" class="dialog-button" type="submit">Block</button>\
+                <button id="allow" class="dialog-button" type="reset">Allow</button>\
+                <button id="proceed" class="dialog-button dialog-button__lg" type="reset">Ask Me Later</button>\
+            </div>\
         </form>\
     </dialog>\
     ';

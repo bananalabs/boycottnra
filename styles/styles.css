@@ -1,0 +1,28 @@
+.dialog {
+    margin: 0 auto;
+    position: relative;
+    width: 32%;
+}
+
+.dialog-actions {
+    display: inline-block;
+}
+
+.dialog-button {
+    float: left;
+    color: #fff;
+    width: 100px;
+    height: 50px;
+    margin-right: 1em;
+    line-height: 50px;
+    background: #446CB3;
+    font-size: 22px;
+    border: 0;
+    border-radius: 3px;
+    box-shadow: 0 5px 5px -5px #333;
+    transition: background 0.3s ease-in;
+}
+
+.dialog-button__lg {
+    width: 130px;
+}
