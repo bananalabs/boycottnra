@@ -10,8 +10,6 @@ function blockSite(event) {
     getBlackWhiteList()
     .then((snapshot) => {
         let list = snapshot.child(id).val() || {};
-        console.log('list in blockSite');
-        console.log(list);
         event.target.checked ?
         blockDomain(list, id, domain, true, false) :
         unblockDomain(list, id, domain);
@@ -31,7 +29,6 @@ function allowSite(event) {
 }
 
 (function createSitesTable() {
-    console.log('createSitesTable');
     const table = document.getElementById('sites_table');
     // Create a row for each site that supports NRA
     Object.keys(sites).forEach((siteName) => {

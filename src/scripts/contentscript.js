@@ -40,7 +40,7 @@ const checkDomain = function() {
       informUser(blackOrWhite || {}, id, domain);
     }
   })
-  .catch((err) => console.log('get error - ' + err));
+  .catch((err) => console.log(err));
 }
 
 document.addEventListener('DOMContentLoaded', checkDomain);

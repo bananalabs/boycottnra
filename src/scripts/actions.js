@@ -26,13 +26,11 @@ export const blockDomain = function(blackOrWhite, id, domain, addToList, blockNo
     // Add domain to blacklist if not in list already
     if (addToList && blackOrWhite) {
        // Add domain to blackList
-       console.log('add domain to blacklist');
         let blacklist = blackOrWhite['blacklist'] || [];
         if (!blacklist.includes(domain)) {
             blacklist.push(domain);
             blackOrWhite['blacklist'] = [...blacklist];
         }
-        console.log(blackOrWhite);
         // Remove domain from whitelist
         let whitelist = blackOrWhite['whitelist'] || [];
         const index = whitelist.indexOf(domain);
@@ -40,7 +38,6 @@ export const blockDomain = function(blackOrWhite, id, domain, addToList, blockNo
             whitelist.splice(index, 1);
             blackOrWhite['whitelist'] = [...whitelist];
         }
-        console.log(blackOrWhite);
         writeToDB(id, blackOrWhite);
     }
     // Prevent access to domain
@@ -54,7 +51,6 @@ export function unblockDomain(blackOrWhite, id, domain) {
     if (!blackOrWhite || !domain) return;
     if (blackOrWhite['blacklist']) {
         const index = blackOrWhite['blacklist'].indexOf(domain);
-        console.log(index);
         if (index >= 0) {
             blackOrWhite['blacklist'].splice(index, 1);
         }
