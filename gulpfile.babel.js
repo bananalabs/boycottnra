@@ -128,7 +128,9 @@ function mergeAll(dest) {
 function buildJS(target) {
   const files = [
     'contentscript.js',
-    'livereload.js'
+    'livereload.js',
+    'background.js',
+    "sites.js"
   ]
 
   let tasks = files.map( file => {

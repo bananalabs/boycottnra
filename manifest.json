@@ -8,6 +8,11 @@
     "128": "icons/block-nra-logo.svg"
   },
   "default_locale": "en",
+  "background": {
+    "scripts": [
+      "scripts/background.js"
+    ]
+  },
    "permissions": [
     "tabs",
     "storage",
@@ -34,7 +39,8 @@
       "38": "icons/block-nra-logo.svg"
     },
     "default_title": "#boycottNRA"
-  }
+  },
+  "content_security_policy": "script-src 'self' https://cdn.firebase.com https://*.firebaseio.com; object-src 'self'"
 }
 
 

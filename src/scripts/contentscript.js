@@ -7,14 +7,11 @@ import {
   isSupportsNRA
 } from './checks.js';
 import {
+  getBlackWhiteList,
   blockDomain,
   allowDomain,
   informUser
 } from './actions.js';
-
-const getBlackWhiteList = function(id) {
-  return JSON.parse(localStorage.getItem(id)) || null; 
-}
 
 const checkDomain = function() {
   // Get domain page to be loaded
@@ -23,26 +20,27 @@ const checkDomain = function() {
   
   // Get browser fingerprint
   const id = guid();
-
-  // Get list of blacklisted and whitelisted domains for this id
-  // Stored in local storage 
-  // TBD : also store in firebase
-  const blackOrWhite = getBlackWhiteList(id);
   
-  if(isBlackListed(blackOrWhite, domain)) {
-    // Domain is blocked by this browser
-    if (isWithdrawnNRA(nraList, domain)) {
-      // Domain has withdrawn access from NRA, allow access
-      allowDomain(blackOrWhite || {}, id, domain);
-    } else {
-      // Still supporting NRA, Prevent access
-      blockDomain(blackOrWhite || {}, id, domain, false);
+  // Get list of blacklisted and whitelisted domains for this id
+  getBlackWhiteList(id)
+  .then((snapshot) => {
+    let blackOrWhite = snapshot.val() || {};
+    if(isBlackListed(blackOrWhite, domain)) {
+      // Domain is blocked by this browser
+      if (isWithdrawnNRA(nraList, domain)) {
+        // Domain has withdrawn access from NRA, allow access
+        allowDomain(blackOrWhite || {}, id, domain);
+      } else {
+        // Still supporting NRA, Prevent access
+        blockDomain(blackOrWhite || {}, id, domain, false);
+      }
+    } else if (isSupportsNRA(nraList, domain) && !isWhiteListed(blackOrWhite, domain)) {
+      // Domain is supported by NRA and user has not whitelisted it
+      // Check if user wants to block
+      informUser(blackOrWhite || {}, id, domain);
     }
-  } else if (isSupportsNRA(nraList, domain) && !isWhiteListed(blackOrWhite, domain)) {
-    // Domain is supported by NRA and user has not whitelisted it
-    // Check if user wants to block
-    informUser(blackOrWhite || {}, id, domain);
-  }
+  })
+  .catch((err) => console.log('get error - ' + err));
 }
 
 document.addEventListener('DOMContentLoaded', checkDomain);

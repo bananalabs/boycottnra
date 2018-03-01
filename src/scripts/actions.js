@@ -1,25 +1,65 @@
+import { writeToDB, readFromDB } from './utils/db.js';
+
+export function getBlackWhiteList(id) {
+    return readFromDB(id);
+}
+
 export const allowDomain = function(blackOrWhite, id, domain) {
     if (!blackOrWhite || !domain) return;
     // Add domain to whitelist
     let list = blackOrWhite['whitelist'] || [];
     list.push(domain);
     blackOrWhite['whitelist'] = [...list];
-    localStorage.setItem(id, JSON.stringify(blackOrWhite));
+    // localStorage.setItem(id, JSON.stringify(blackOrWhite));
+    writeToDB(id, blackOrWhite);
     // TBD: Add stats to DB
 }
 
-export const blockDomain = function(blackOrWhite, id, domain, add) {
+export const blockDomain = function(blackOrWhite, id, domain, addToList, blockNow = true) {
     // Add domain to blacklist if not in list already
-    if (add && blackOrWhite) {
+    if (addToList && blackOrWhite) {
        // Add domain to blackList
         let list = blackOrWhite['blacklist'] || [];
+        console.log('blacklist');
+        console.log(list);
         list.push(domain);
         blackOrWhite['blacklist'] = [...list];
-        localStorage.setItem(id, JSON.stringify(blackOrWhite));
+        // localStorage.setItem(id, JSON.stringify(blackOrWhite));
+        console.log('before writing to db');
+        console.log(blackOrWhite);
+        writeToDB(id, blackOrWhite);
     }
     // Prevent access to domain
-    document.write('<h2>This website supports the NRA and has been blocked. #boycottNRA.</h2>');
-    // TBD: Add button to unblock
+    if (blockNow) {
+        document.write('<h2>This website supports the NRA and has been blocked. #boycottNRA.</h2>');
+    }
+}
+
+export function unblockDomain(blackOrWhite, id, domain) {
+    // Remove domain from backlist
+    if (!blackOrWhite || !domain) return;
+    if (blackOrWhite['blacklist']) {
+        const index = blackOrWhite['blacklist'].indexOf(domain);
+        console.log(index);
+        if (index >= 0) {
+            blackOrWhite['blacklist'].splice(index, 1);
+        }
+    }
+    // localStorage.setItem(id, JSON.stringify(blackOrWhite));
+    writeToDB(id, blackOrWhite);
+}
+
+export function unallowDomain(blackOrWhite, id, domain) {
+    // Remove domain from backlist
+    if (!blackOrWhite || !domain) return;
+    if (blackOrWhite['whitelist']) {
+        const index = blackOrWhite['whitelist'].indexOf(domain);
+        if (index >= 0) {
+            blackOrWhite['whitelist'].splice(index, 1);
+        }
+    }
+    // localStorage.setItem(id, JSON.stringify(blackOrWhite));
+    writeToDB(id, blackOrWhite);
 }
 
 const boycottDialog = function() {
