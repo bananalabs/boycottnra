@@ -1,14 +1,28 @@
-.dialog {
+#boycottDialog {
     margin: 0 auto;
-    position: relative;
     width: 420px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 6px;
+    text-align: center;
 }
 
-.dialog-actions {
+#boycottForm {
+    margin: auto;
+}
+
+#boycottCaption {
+    font-family: sans-serif;
+    font-size: 1.3em;
+    padding-bottom: 5px;
+    text-align: center;
+}
+
+#boycottActions {
     display: inline-block;
 }
 
-.dialog-button {
+#boycottBlock, #boycottAllow, #boycottProceed {
     float: left;
     color: #fff;
     width: 100px;
@@ -21,8 +35,4 @@
     border-radius: 3px;
     box-shadow: 0 5px 5px -5px lightgrey;
     transition: background 0.3s ease-in;
-}
-
-.dialog-button__lg {
-    width: 150px;
 }

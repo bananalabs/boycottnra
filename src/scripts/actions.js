@@ -74,13 +74,13 @@ export function unallowDomain(blackOrWhite, id, domain) {
 
 const boycottDialog = function() {
     // TBD : Add stats on gun violence
-    return '<dialog id="boycottDialog" class="dialog">\
-        <form method="dialog">\
-            <p>This website supports the NRA. #boycottNRA.</p>\
-            <div class="dialog-actions">\
-                <button id="block" class="dialog-button" type="submit">Block</button>\
-                <button id="allow" class="dialog-button" type="reset">Allow</button>\
-                <button id="proceed" class="dialog-button dialog-button__lg" type="reset">Ask Me Later</button>\
+    return '<dialog id="boycottDialog">\
+        <form id="boycottForm" method="dialog">\
+            <p id="boycottCaption">This website supports the NRA. #boycottNRA.</p>\
+            <div id="dialogActions">\
+                <button id="boycottBlock"style="margin-left: 10px">Block</button>\
+                <button id="boycottAllow">Allow</button>\
+                <button id="boycottProceed" style="width:150px;margin-right:0">Ask Me Later</button>\
             </div>\
         </form>\
     </dialog>\
