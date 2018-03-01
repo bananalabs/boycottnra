@@ -6,9 +6,6 @@ import guid from './utils/browserfingerprint.js';
 const id = guid();
 
 function blockSite(event, list) {
-    console.log('blockSite');
-    console.log(event);
-    console.log(list);
     const domain = event.target.id.split('_')[1];
     if (event.target.checked) {
         blockDomain(list, id, domain, true, false);

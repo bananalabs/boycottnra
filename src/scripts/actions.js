@@ -1,4 +1,5 @@
 import { writeToDB, readFromDB } from './utils/db.js';
+import { incrementBlockedStats, incrementAllowedStats } from './stats.js';
 
 export function getBlackWhiteList(id) {
     return readFromDB(id);
@@ -19,7 +20,16 @@ export const allowDomain = function(blackOrWhite, id, domain) {
         blacklist.splice(index, 1);
         blackOrWhite['blacklist'] = [...blacklist];
     }
+    // Increment allowed count for this user + domain
+    let allowed = blackOrWhite['allowed'] || {};
+    const key = domain.replace(".", "%");
+    allowed[key] = allowed[key] ? allowed[key] + 1 : 1;
+    blackOrWhite['allowed'] = Object.assign({}, allowed);
     writeToDB(id, blackOrWhite);
+    // Increment overall allowed count for all users, once per user per domain
+    if (allowed[key] <= 1) {
+        incrementAllowedStats(domain);
+    }
 }
 
 export const blockDomain = function(blackOrWhite, id, domain, addToList, blockNow = true) {
@@ -38,7 +48,16 @@ export const blockDomain = function(blackOrWhite, id, domain, addToList, blockNo
             whitelist.splice(index, 1);
             blackOrWhite['whitelist'] = [...whitelist];
         }
+        // Increment blocked count for this user + domain
+        let blocked = blackOrWhite['blocked'] || {};
+        const key = domain.replace(".", "%");
+        blocked[key] = blocked[key] ? blocked[key] + 1 : 1;
+        blackOrWhite['blocked'] = Object.assign({}, blocked);
         writeToDB(id, blackOrWhite);
+        // Increment overall blocked count for all users, once per user per domain
+        if (blocked[key] <= 1) {
+            incrementBlockedStats(domain);
+        }
     }
     // Prevent access to domain
     if (blockNow) {
@@ -55,7 +74,6 @@ export function unblockDomain(blackOrWhite, id, domain) {
             blackOrWhite['blacklist'].splice(index, 1);
         }
     }
-    // localStorage.setItem(id, JSON.stringify(blackOrWhite));
     writeToDB(id, blackOrWhite);
 }
 
@@ -68,7 +86,6 @@ export function unallowDomain(blackOrWhite, id, domain) {
             blackOrWhite['whitelist'].splice(index, 1);
         }
     }
-    // localStorage.setItem(id, JSON.stringify(blackOrWhite));
     writeToDB(id, blackOrWhite);
 }
 
